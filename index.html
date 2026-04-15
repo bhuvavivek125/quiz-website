@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Test Your IQ | Premium Quiz</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --text-dark: #222222;
+            --ad-bg: #f8f9fa;
+            --ad-border: #ced4da;
+        }
+        
+        body {
+            /* Full screen gradient background */
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Centered card design */
+        .quiz-card {
+            background: #ffffff;
+            color: var(--text-dark);
+            border-radius: 20px;
+            padding: 35px 25px;
+            max-width: 420px;
+            width: 92%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            text-align: center;
+            
+            /* Subtle fade-in animation */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUpFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji-icon {
+            font-size: 4.5rem;
+            margin-bottom: 5px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        /* Large, eye-catching button */
+        .btn-start {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: bold;
+            padding: 16px;
+            border-radius: 15px;
+            border: none;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4);
+            cursor: pointer;
+        }
+
+        /* Smooth hover effect */
+        .btn-start:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 242, 254, 0.6);
+            color: #ffffff;
+        }
+
+        .btn-start:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 10px rgba(0, 242, 254, 0.3);
+        }
+
+        /* Ad Placement */
+        .ad-container {
+            width: 100%;
+            min-height: 100px;
+            background-color: var(--ad-bg);
+            border: 2px dashed var(--ad-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .ad-container:hover {
+            background-color: #f1f3f5;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding-bottom: 20px;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin: 0 12px;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Mobile-First Centered Card -->
+    <div class="quiz-card">
+        
+        <div class="emoji-icon">🧠</div>
+        
+        <h1>Test Your IQ</h1>
+        <p class="subtitle">Only 1% people can pass this test 😱</p>
+
+        <!-- Top Ad Placement (Above the button) -->
+        <div class="ad-container shadow-sm">
+            Ad Space
+            <small class="fw-normal text-muted">(Top Ad Area)</small>
+        </div>
+
+        <!-- Start Quiz CTA Button -->
+        <a href="quiz.html" class="btn-start" id="start-btn">Start Quiz 🚀</a>
+
+        <!-- Bottom Ad Placement (Below the button) -->
+        <div class="ad-container shadow-sm">
+            Ad Space
+            <small class="fw-normal text-muted">(Bottom Ad Area)</small>
+        </div>
+
+    </div>
+
+    <!-- AdSense Safe Policy Pages Footer -->
+    <footer class="text-center">
+        <a href="about.html">About Us</a> | 
+        <a href="contact.html">Contact Us</a> | 
+        <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
+    <!-- Bootstrap Bundle & JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Additional UX improvement: Pulse animation to draw attention to the button
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('start-btn');
+            
+            // Subtle heartbeat pulse every few seconds
+            setInterval(() => {
+                if (!btn.matches(':hover')) {
+                    btn.style.transform = "scale(1.04)";
+                    setTimeout(() => {
+                        btn.style.transform = "scale(1)";
+                    }, 200);
+                    
+                    setTimeout(() => {
+                        btn.style.transform = "scale(1.04)";
+                        setTimeout(() => {
+                            btn.style.transform = "scale(1)";
+                        }, 200);
+                    }, 350);
+                }
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

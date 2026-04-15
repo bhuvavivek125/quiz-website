@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | Test Your IQ</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --text-dark: #222222;
+            --ad-bg: #f8f9fa;
+            --ad-border: #ced4da;
+        }
+
+        body {
+            /* Full screen gradient background matching homepage */
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            font-family: Arial, sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 15px;
+        }
+
+        /* Mobile-first centered quiz card */
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            position: relative;
+        }
+
+        /* Smooth slide and fade transition */
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Progress Bar Segment */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #6c757d;
+            margin-bottom: 12px;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            background-color: #e9ecef;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Question Typography */
+        #question-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            color: var(--text-dark);
+        }
+
+        /* Interactive Choice Options */
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background-color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-color);
+            background-color: #f7fafc;
+            transform: translateX(4px);
+        }
+
+        /* Selected State */
+        .option-btn.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 172, 254, 0.1);
+            color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.2);
+        }
+
+        /* Clear AdContainer Specs */
+        .ad-container {
+            width: 100%;
+            min-height: 90px;
+            background-color: var(--ad-bg);
+            border: 2px dashed var(--ad-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        /* Main action button */
+        .btn-next {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 14px;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        /* Disabled state formatting */
+        .btn-next:disabled {
+            background: #cbd5e1;
+            color: #ffffff;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-next:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
+            color: #ffffff;
+        }
+
+        /* Centered UI Loader */
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            animation: fadeIn 0.5s ease;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card" id="main-card">
+        
+        <div id="quiz-wrapper">
+            <!-- Progress Section -->
+            <div class="progress-header">
+                <span id="question-count">Question 1 of 5</span>
+            </div>
+            
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 20%;"></div>
+            </div>
+
+            <!-- Quiz Injection Wrapper with crossfade animation class -->
+            <div id="question-fade-container" class="fade-in">
+                <h3 id="question-text">Loading question...</h3>
+                
+                <div id="options-container">
+                    <!-- Options injected here via JS -->
+                </div>
+            </div>
+
+            <!-- Dynamic Ad Container (Appears conditionally based on indices) -->
+            <div id="ad-slot" class="ad-container" style="display: none;">
+                <div class="text-center">
+                    Ad Space<br>
+                    <small class="fw-normal">(Displays dynamically here)</small>
+                </div>
+            </div>
+
+            <!-- Controlled Navigation -->
+            <button id="next-btn" class="btn-next" disabled>Next</button>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Quiz Data - 5 Questions
+        const quizData = [
+            {
+                question: "Which of the following is the fastest land animal?",
+                options: ["Cheetah", "Lion", "Leopard", "Tiger"],
+                answer: "Cheetah"
+            },
+            {
+                question: "How many continents are there on Earth?",
+                options: ["5", "6", "7", "8"],
+                answer: "7"
+            },
+            {
+                question: "What is the hardest natural substance on Earth?",
+                options: ["Gold", "Iron", "Diamond", "Platinum"],
+                answer: "Diamond"
+            },
+            {
+                question: "Solve the math puzzle: 5 + 5 × 5 = ?",
+                options: ["50", "30", "25", "20"],
+                answer: "30"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Venus"],
+                answer: "Mars"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Elements
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const progressCount = document.getElementById('question-count');
+        const progressBar = document.getElementById('progress-bar');
+        const adSlot = document.getElementById('ad-slot');
+        const fadeContainer = document.getElementById('question-fade-container');
+
+        // Functions
+        function loadQuestion() {
+            // Apply Fade-in structural animation transition
+            fadeContainer.classList.remove('fade-in');
+            void fadeContainer.offsetWidth; // Force Reflow
+            fadeContainer.classList.add('fade-in');
+
+            const currentQ = quizData[currentQuestionIndex];
+            
+            // Set typography texts and bootstrap progress width safely
+            questionText.innerText = currentQ.question;
+            progressCount.innerText = "Question " + (currentQuestionIndex + 1) + " of " + quizData.length;
+            progressBar.style.width = (((currentQuestionIndex + 1) / quizData.length) * 100) + "%";
+
+            // Render Dynamic Option Selectors
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(btn, opt);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Neutralize UI states
+            nextBtn.disabled = true;
+            nextBtn.innerText = currentQuestionIndex === quizData.length - 1 ? "Submit Quiz" : "Next";
+        }
+
+        function selectOption(selectedBtn, selectedValue) {
+            // Strip styles globally
+            const options = document.querySelectorAll('.option-btn');
+            options.forEach(btn => btn.classList.remove('selected'));
+            
+            // Reapply target styling cleanly
+            selectedBtn.classList.add('selected');
+            selectedBtn.setAttribute('data-value', selectedValue);
+
+            // Allow passage structure
+            nextBtn.disabled = false;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const selectedBtn = document.querySelector('.option-btn.selected');
+            if(!selectedBtn) return; // Failsafe check
+
+            const selectedAnswer = selectedBtn.getAttribute('data-value');
+            if (selectedAnswer === quizData[currentQuestionIndex].answer) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+
+            // Handle Ad Display gracefully -> Inject specifically AFTER Q2 (index 2) and Q4 (index 4)
+            if (currentQuestionIndex === 2 || currentQuestionIndex === 4) {
+                adSlot.style.display = 'flex';
+            } else {
+                adSlot.style.display = 'none';
+            }
+
+            // Progression evaluation
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        });
+
+        function finishQuiz() {
+            // Store score output purely using localStorage before redirection
+            localStorage.setItem('quizScore', score);
+            localStorage.setItem('totalQuestions', quizData.length);
+            
+            // Seamless visual transition feedback
+            const wrapper = document.getElementById('main-card');
+            wrapper.style.display = 'none'; // Hide quiz card
+            
+            // Provide lightweight CSS animated div temporarily onto document body
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'loader-wrapper';
+            loaderDiv.innerHTML = `
+                <div class="spinner-border mb-3 mt-4 text-light" style="width: 4rem; height: 4rem;" role="status"></div>
+                <h3 class="fw-bold mt-2">Calculating results...</h3>
+            `;
+            document.body.appendChild(loaderDiv);
+
+            // Transition gracefully
+            setTimeout(() => {
+                window.location.href = 'result.html';
+            }, 1500);
+        }
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>

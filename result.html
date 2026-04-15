@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result | Test Your IQ</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --text-dark: #222222;
+            --ad-bg: #f8f9fa;
+            --ad-border: #ced4da;
+        }
+
+        body {
+            /* Identical Full Screen Gradient Branding */
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            font-family: Arial, sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 15px;
+        }
+
+        .result-card, .loading-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px 25px;
+            max-width: 450px;
+            width: 95%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        /* Loader Sequence State */
+        .loading-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 350px;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner-wrapper {
+            margin-bottom: 25px;
+        }
+
+        #loading-message {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Primary Result State */
+        .result-card {
+            display: none; /* Stated hidden until execution */
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Result Information Hierarchy */
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 5px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .score-circle h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        h2.result-title {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        h3.result-verdict {
+            font-weight: 800;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        /* Standard Ad Placements */
+        .ad-container {
+            width: 100%;
+            min-height: 90px;
+            background-color: var(--ad-bg);
+            border: 2px dashed var(--ad-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .btn-restart {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-restart:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-share {
+            background: #25D366;
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            width: 100%;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn-share:hover {
+            background: #1ebe57;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        /* AdSense Policy Link Standard Footer */
+        footer {
+            margin-top: 30px;
+            padding-bottom: 10px;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin: 0 12px;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Suspense Loader Representation -->
+    <div class="loading-card" id="loading-card">
+        <div class="spinner-wrapper">
+            <div class="spinner-border" style="width: 4rem; height: 4rem; color: var(--primary-color);" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div id="loading-message">Analyzing your answers...</div>
+    </div>
+
+    <!-- Generated Actionable Result Core -->
+    <div class="result-card fade-in" id="result-card">
+        
+        <h2 class="result-title">Quiz Complete! 🎉</h2>
+        <p class="text-muted fw-bold mb-2">Here is how you performed:</p>
+        
+        <!-- Overhead Ad Placement -->
+        <div class="ad-container shadow-sm">
+            Ad Space<br>
+            <small class="fw-normal text-muted">(Top Screen Placement)</small>
+        </div>
+
+        <div class="score-circle">
+            <h1 id="score-display">0/0</h1>
+        </div>
+
+        <h3 id="result-verdict" class="result-verdict">...</h3>
+
+        <!-- Ground Ad Placement -->
+        <div class="ad-container shadow-sm mt-3 mb-4">
+            Ad Space<br>
+            <small class="fw-normal text-muted">(Bottom Ad Placement)</small>
+        </div>
+
+        <!-- Utility Tunnels -->
+        <div class="action-buttons">
+            <button id="share-btn" class="btn-share">
+                <i class="bi bi-whatsapp me-2 fs-5"></i> Share Result
+            </button>
+            <a href="index.html" class="btn-restart" id="restart-btn">Restart Quiz</a>
+        </div>
+
+    </div>
+
+    <!-- Compliant Universal Site Footer -->
+    <footer class="text-center">
+        <a href="about.html">About</a> | 
+        <a href="contact.html">Contact</a> | 
+        <a href="privacy.html">Privacy</a>
+    </footer>
+
+    <!-- Bootstrap Scripting Requirements -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Central Logic Block -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingCard = document.getElementById('loading-card');
+            const resultCard = document.getElementById('result-card');
+            const loadingMsg = document.getElementById('loading-message');
+            
+            // Suspense logic Array
+            const messages = ["Analyzing your answers...", "Calculating result...", "Formatting scores..."];
+            let msgIndex = 0;
+            
+            // Loop fade changes across the wait duration
+            const msgInterval = setInterval(() => {
+                msgIndex++;
+                if(msgIndex < messages.length) {
+                    loadingMsg.style.opacity = 0;
+                    setTimeout(() => {
+                        loadingMsg.innerText = messages[msgIndex];
+                        loadingMsg.style.opacity = 1;
+                    }, 200);
+                }
+            }, 900);
+
+            // Execute switch safely after an elapsed psychological analyzing buffer
+            setTimeout(() => {
+                clearInterval(msgInterval);
+                loadingCard.style.display = 'none';
+                resultCard.style.display = 'block';
+
+                // Core Data mapping
+                const score = parseInt(localStorage.getItem('quizScore') || '0');
+                const totalQ = parseInt(localStorage.getItem('totalQuestions') || '5');
+                const percentage = (totalQ === 0) ? 0 : (score / totalQ) * 100;
+
+                const verdictElement = document.getElementById('result-verdict');
+                let verdictStr = "";
+
+                // Branching contextual score outputs
+                if (percentage >= 80) {
+                    verdictStr = "You are Genius 😍";
+                    verdictElement.style.color = "#28a745"; // Success green text
+                } else if (percentage >= 40) {
+                    verdictStr = "You are Average 🙂";
+                    verdictElement.style.color = "#ff9800"; // Mild orange indicator
+                } else {
+                    verdictStr = "Try Again 😅";
+                    verdictElement.style.color = "#dc3545"; // Warning Red indicator
+                }
+
+                // Render parameters
+                document.getElementById('score-display').innerText = `${score}/${totalQ}`;
+                verdictElement.innerText = verdictStr;
+
+                // Share Button Listener Binding (Formatting URL explicitly backwards to target /index.html naturally)
+                const shareBtn = document.getElementById('share-btn');
+                shareBtn.addEventListener('click', () => {
+                    let pageUrl = window.location.href.split('result.html')[0] || window.location.href; 
+                    if (!pageUrl.endsWith('/')) {
+                        pageUrl += '/';
+                    }
+                    const appUrl = pageUrl + 'index.html';
+                    
+                    const textContent = `I scored ${score}/${totalQ} in the IQ Quiz! ✅ Result: ${verdictStr}. Try to beat my score here: ${appUrl}`;
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textContent)}`;
+                    window.open(whatsappUrl, '_blank');
+                });
+
+                // Clear tracked data securely after loading is achieved
+                localStorage.removeItem('quizScore');
+                localStorage.removeItem('totalQuestions');
+                
+            }, 2800); // Display strictly loaded loading message for 2.8s
+        });
+    </script>
+</body>
+</html>
