@@ -2,8 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 Test Your IQ | Premium Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="description" content="Play the ultimate Viral Quiz App! Test your General Knowledge, Math, Science, Bollywood, and Sports skills to earn a Genius score.">
+    <meta name="keywords" content="quiz, test your iq, gk quiz, math puzzle, bollywood quiz, sports quiz, viral quiz">
+    <meta name="author" content="Quiz App">
+    
+    <!-- Open Graph for WhatsApp & Facebook Sharing -->
+    <meta property="og:title" content="🧠 Test Your IQ | Premium Quiz Hub">
+    <meta property="og:description" content="Click here to play the ultimate quiz challenge and test your brain power across 5 categories!">
+    <meta property="og:type" content="website">
+    
+    <title>🧠 Test Your IQ | Premium Quiz Hub</title>
+
+    <!-- 1️⃣ Google AdSense Main Script: Ahya 'YOUR_CLIENT_ID' ni jagya e tamaru AdSense Publisher ID nakho (eg. ca-pub-1234567890123456) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_CLIENT_ID" crossorigin="anonymous"></script>
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -14,106 +31,178 @@
             --ad-bg: #f8f9fa;
             --ad-border: #ced4da;
         }
-        
+
         body {
-            /* Full screen gradient background */
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1920&q=80') center/cover fixed, #111;
             font-family: Arial, sans-serif;
             color: #ffffff;
             margin: 0;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
+            align-items: flex-start;
         }
 
-        /* Centered card design */
-        .quiz-card {
+        #app-wrapper {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 15px 5px 15px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .top-banner-ad {
+            width: 100%;
+            background: rgba(255,255,255,0.15);
+            border: 1px dashed rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .bottom-info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+
+        .info-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.25);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2);
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            line-height: 1.35;
+            opacity: 0.95;
+            flex: 1;
+        }
+
+        .info-text strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #ffffff;
+            opacity: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .main-container {
             background: #ffffff;
             color: var(--text-dark);
             border-radius: 20px;
-            padding: 35px 25px;
-            max-width: 420px;
-            width: 92%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            padding: 15px 15px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             text-align: center;
-            
-            /* Subtle fade-in animation */
             opacity: 0;
             transform: translateY(30px);
             animation: slideUpFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         @keyframes slideUpFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .emoji-icon {
-            font-size: 4.5rem;
-            margin-bottom: 5px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
             font-weight: 800;
-            font-size: 2.2rem;
-            margin-bottom: 8px;
+            font-size: 1.6rem;
+            margin-bottom: 2px;
             color: var(--primary-color);
             letter-spacing: -0.5px;
         }
 
         p.subtitle {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #6c757d;
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
         }
 
-        /* Large, eye-catching button */
-        .btn-start {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            color: #ffffff;
-            font-size: 1.35rem;
-            font-weight: bold;
-            padding: 16px;
-            border-radius: 15px;
-            border: none;
-            width: 100%;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4);
+        /* 5 Mini-App Categories Grid */
+        .category-box {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 10px 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-decoration: none;
+            color: var(--text-dark);
         }
 
-        /* Smooth hover effect */
-        .btn-start:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 25px rgba(0, 242, 254, 0.6);
-            color: #ffffff;
+        .category-box:hover {
+            border-color: var(--primary-color);
+            background: rgba(79, 172, 254, 0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0, 150, 255, 0.15);
         }
 
-        .btn-start:active {
-            transform: translateY(1px);
-            box-shadow: 0 5px 10px rgba(0, 242, 254, 0.3);
+        .category-icon {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
         }
 
-        /* Ad Placement */
+        .category-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.2;
+        }
+
+        .category-play {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 0.75rem;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
         .ad-container {
             width: 100%;
-            min-height: 100px;
+            min-height: 70px;
             background-color: var(--ad-bg);
             border: 2px dashed var(--ad-border);
             display: flex;
@@ -122,26 +211,21 @@
             justify-content: center;
             color: #888888;
             border-radius: 12px;
-            margin: 20px 0;
-            font-size: 0.95rem;
+            margin: 10px 0;
+            font-size: 0.85rem;
             font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        
-        .ad-container:hover {
-            background-color: #f1f3f5;
         }
 
         footer {
-            margin-top: 30px;
-            padding-bottom: 20px;
+            margin-top: 15px;
+            padding-bottom: 10px;
         }
 
         footer a {
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.95rem;
-            margin: 0 12px;
+            font-size: 0.9rem;
+            margin: 0 10px;
             opacity: 0.85;
             transition: opacity 0.3s;
             font-weight: 500;
@@ -154,63 +238,128 @@
     </style>
 </head>
 <body>
+    <div id="app-wrapper">
 
-    <!-- Main Mobile-First Centered Card -->
-    <div class="quiz-card">
-        
-        <div class="emoji-icon">🧠</div>
-        
-        <h1>Test Your IQ</h1>
-        <p class="subtitle">Only 1% people can pass this test 😱</p>
-
-        <!-- Top Ad Placement (Above the button) -->
-        <div class="ad-container shadow-sm">
-            Ad Space
-            <small class="fw-normal text-muted">(Top Ad Area)</small>
+        <div class="w-100">
+            <!-- Top External Banner Ad -->
+            <div class="top-banner-ad" style="margin-bottom: 0; padding: 0; display: block; overflow: hidden;">
+                <!-- 2️⃣ First Ad Unit: Ahya 'YOUR_CLIENT_ID' ane 'YOUR_AD_SLOT_ID_1' ni jagya e tamari AdSense detail nakho -->
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 60px;"
+                     data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID_1"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
         </div>
 
-        <!-- Start Quiz CTA Button -->
-        <a href="quiz.html" class="btn-start" id="start-btn">Start Quiz 🚀</a>
+        <div class="main-container">
+        
+        <h1 class="mt-2">Play Quiz & Win! 🚀</h1>
+        <p class="subtitle">Select a topic below to test your abilities.</p>
 
-        <!-- Bottom Ad Placement (Below the button) -->
-        <div class="ad-container shadow-sm">
-            Ad Space
-            <small class="fw-normal text-muted">(Bottom Ad Area)</small>
+        <!-- Top Ad Placement -->
+        <div class="ad-container shadow-sm" style="padding: 0; overflow: hidden; display: block;">
+            <!-- 3️⃣ Second Ad Unit: Ahya 'YOUR_CLIENT_ID' ane 'YOUR_AD_SLOT_ID_2' ni jagya e tamari detail nakho -->
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 70px;"
+                 data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID_2"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
-    </div>
+        <!-- 5 Category Cards System -->
+        <div class="row g-3 mb-3">
+            <div class="col-6">
+                <div class="category-box" onclick="startQuiz('gk')">
+                    <div class="category-icon">🌎</div>
+                    <div class="category-name">General Knowledge</div>
+                    <div class="category-play">Play Now</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="category-box" onclick="startQuiz('math')">
+                    <div class="category-icon">🧮</div>
+                    <div class="category-name">Math Puzzle</div>
+                    <div class="category-play">Play Now</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="category-box" onclick="startQuiz('science')">
+                    <div class="category-icon">🧬</div>
+                    <div class="category-name">Science & Tech</div>
+                    <div class="category-play">Play Now</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="category-box" onclick="startQuiz('bollywood')">
+                    <div class="category-icon">🎬</div>
+                    <div class="category-name">Bollywood</div>
+                    <div class="category-play">Play Now</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="category-box" style="flex-direction: row; gap: 15px; padding: 15px;" onclick="startQuiz('sports')">
+                    <div class="category-icon" style="margin: 0;">🏏</div>
+                    <div style="text-align: left;">
+                        <div class="category-name fs-5">Sports Quiz</div>
+                        <div class="category-play" style="margin-top: 5px;">Play Now</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- AdSense Safe Policy Pages Footer -->
-    <footer class="text-center">
-        <a href="about.html">About Us</a> | 
-        <a href="contact.html">Contact Us</a> | 
-        <a href="privacy.html">Privacy Policy</a>
-    </footer>
+        <!-- Bottom Ad Placement -->
+        <div class="ad-container shadow-sm" style="padding: 0; overflow: hidden; display: block;">
+            <!-- 4️⃣ Third Ad Unit: Ahya 'YOUR_CLIENT_ID' ane 'YOUR_AD_SLOT_ID_3' ni jagya e tamari detail nakho -->
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 70px;"
+                 data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID_3"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
 
-    <!-- Bootstrap Bundle & JS -->
+        </div> <!-- End of main-container -->
+
+        <div class="w-100">
+            <!-- Premium Glassmorphism Info Card -->
+            <div class="bottom-info-card">
+                <div class="info-icon">💡</div>
+                <div class="info-text">
+                    <strong>Brain Training</strong>
+                    Playing daily quizzes improves memory and keeps your mind sharp! Share with friends to compete.
+                </div>
+            </div>
+
+            <!-- AdSense Policy Pages Footer -->
+            <footer class="text-center">
+                <a href="about.html">About</a> | 
+                <a href="contact.html">Contact</a> | 
+                <a href="privacy.html">Privacy</a>
+            </footer>
+        </div>
+
+    </div> <!-- End of app-wrapper -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Additional UX improvement: Pulse animation to draw attention to the button
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('start-btn');
-            
-            // Subtle heartbeat pulse every few seconds
-            setInterval(() => {
-                if (!btn.matches(':hover')) {
-                    btn.style.transform = "scale(1.04)";
-                    setTimeout(() => {
-                        btn.style.transform = "scale(1)";
-                    }, 200);
-                    
-                    setTimeout(() => {
-                        btn.style.transform = "scale(1.04)";
-                        setTimeout(() => {
-                            btn.style.transform = "scale(1)";
-                        }, 200);
-                    }, 350);
-                }
-            }, 4000);
-        });
+        function startQuiz(categoryId) {
+            // Push active selection securely into local-storage memory
+            localStorage.setItem('selectedCategory', categoryId);
+            // Engage transition protocol
+            window.location.href = 'quiz.html';
+        }
     </script>
 </body>
 </html>

@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Result | Test Your IQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="description" content="Check out the verified results of the IQ Quiz. Are you a genius or average? Play now to find out!">
+    <title>Quiz Result | Verified Score</title>
+
+    <!-- 1️⃣ Google AdSense Main Script: Ahya 'YOUR_CLIENT_ID' ni jagya e tamaru AdSense Publisher ID nakho -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_CLIENT_ID" crossorigin="anonymous"></script>
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -18,18 +26,28 @@
         }
 
         body {
-            /* Identical Full Screen Gradient Branding */
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1920&q=80') center/cover fixed, #111;
             font-family: Arial, sans-serif;
             color: var(--text-dark);
             margin: 0;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
+            align-items: flex-start;
+        }
+
+        #app-wrapper {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            overflow-x: hidden;
-            padding: 15px;
+            padding: 15px 15px 5px 15px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.6);
+            position: relative;
         }
 
         .result-card, .loading-card {
@@ -42,7 +60,18 @@
             text-align: center;
         }
 
-        /* Loader Sequence State */
+        /* Notice Badges */
+        .badge-topic {
+            background-color: #6fbaff;
+            color: white;
+            font-size: 0.9rem;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
         .loading-card {
             display: flex;
             flex-direction: column;
@@ -52,9 +81,7 @@
             transition: opacity 0.5s ease;
         }
 
-        .spinner-wrapper {
-            margin-bottom: 25px;
-        }
+        .spinner-wrapper { margin-bottom: 25px; }
 
         #loading-message {
             font-size: 1.35rem;
@@ -63,10 +90,7 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Primary Result State */
-        .result-card {
-            display: none; /* Stated hidden until execution */
-        }
+        .result-card { display: none; }
 
         .fade-in {
             animation: fadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -77,7 +101,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Result Information Hierarchy */
         .score-circle {
             width: 140px;
             height: 140px;
@@ -118,7 +141,70 @@
             margin-bottom: 20px;
         }
 
-        /* Standard Ad Placements */
+        .top-banner-ad {
+            width: 100%;
+            background: rgba(255,255,255,0.15);
+            border: 1px dashed rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 15px;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .bottom-info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+
+        .info-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.25);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2);
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            line-height: 1.35;
+            opacity: 0.95;
+            flex: 1;
+        }
+
+        .info-text strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            color: #ffffff;
+            opacity: 1;
+            letter-spacing: 0.5px;
+        }
+
         .ad-container {
             width: 100%;
             min-height: 90px;
@@ -135,7 +221,6 @@
             font-weight: bold;
         }
 
-        /* Action Buttons */
         .btn-restart {
             background: transparent;
             color: var(--primary-color);
@@ -181,7 +266,6 @@
             color: white;
         }
 
-        /* AdSense Policy Link Standard Footer */
         footer {
             margin-top: 30px;
             padding-bottom: 10px;
@@ -204,9 +288,25 @@
     </style>
 </head>
 <body>
+    <div id="app-wrapper">
 
-    <!-- Suspense Loader Representation -->
-    <div class="loading-card" id="loading-card">
+        <div class="w-100">
+            <!-- Top External Banner Ad -->
+            <div class="top-banner-ad" style="margin-bottom: 0; padding: 0; display: block; overflow: hidden;">
+                <!-- 2️⃣ First Ad Unit -->
+                <ins class="adsbygoogle"
+                     style="display:block; min-height: 60px;"
+                     data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID_1"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="loading-card" id="loading-card">
         <div class="spinner-wrapper">
             <div class="spinner-border" style="width: 4rem; height: 4rem; color: var(--primary-color);" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -215,16 +315,24 @@
         <div id="loading-message">Analyzing your answers...</div>
     </div>
 
-    <!-- Generated Actionable Result Core -->
     <div class="result-card fade-in" id="result-card">
         
+        <div id="topic-badge" class="badge-topic shadow-sm">Loading Topic...</div>
+
         <h2 class="result-title">Quiz Complete! 🎉</h2>
         <p class="text-muted fw-bold mb-2">Here is how you performed:</p>
         
-        <!-- Overhead Ad Placement -->
-        <div class="ad-container shadow-sm">
-            Ad Space<br>
-            <small class="fw-normal text-muted">(Top Screen Placement)</small>
+        <div class="ad-container shadow-sm" style="padding: 0; overflow: hidden; display: block;">
+            <!-- 3️⃣ Second Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 90px;"
+                 data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID_2"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
         <div class="score-circle">
@@ -233,44 +341,57 @@
 
         <h3 id="result-verdict" class="result-verdict">...</h3>
 
-        <!-- Ground Ad Placement -->
-        <div class="ad-container shadow-sm mt-3 mb-4">
-            Ad Space<br>
-            <small class="fw-normal text-muted">(Bottom Ad Placement)</small>
+        <div class="ad-container shadow-sm mt-3 mb-4" style="padding: 0; overflow: hidden; display: block;">
+            <!-- 4️⃣ Third Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block; min-height: 90px;"
+                 data-ad-client="ca-pub-YOUR_CLIENT_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID_3"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
 
-        <!-- Utility Tunnels -->
         <div class="action-buttons">
             <button id="share-btn" class="btn-share">
-                <i class="bi bi-whatsapp me-2 fs-5"></i> Share Result
+                <i class="bi bi-whatsapp me-2 fs-5"></i> Spread Challenge
             </button>
-            <a href="index.html" class="btn-restart" id="restart-btn">Restart Quiz</a>
+            <a href="index.html" class="btn-restart" id="restart-btn">Try Another Topic</a>
         </div>
 
     </div>
 
-    <!-- Compliant Universal Site Footer -->
-    <footer class="text-center">
-        <a href="about.html">About</a> | 
-        <a href="contact.html">Contact</a> | 
-        <a href="privacy.html">Privacy</a>
-    </footer>
+        <div class="w-100">
+            <!-- Premium Glassmorphism Info Card -->
+            <div class="bottom-info-card">
+                <div class="info-icon">🏆</div>
+                <div class="info-text">
+                    <strong>Well Played!</strong>
+                    Challenge your friends to beat your score! Explore our homepage for entirely new topics.
+                </div>
+            </div>
 
-    <!-- Bootstrap Scripting Requirements -->
+            <footer class="text-center">
+                <a href="about.html">About</a> | 
+                <a href="contact.html">Contact</a> | 
+                <a href="privacy.html">Privacy</a>
+            </footer>
+        </div>
+
+    </div> <!-- app wrapper ends -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Central Logic Block -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loadingCard = document.getElementById('loading-card');
             const resultCard = document.getElementById('result-card');
             const loadingMsg = document.getElementById('loading-message');
             
-            // Suspense logic Array
-            const messages = ["Analyzing your answers...", "Calculating result...", "Formatting scores..."];
+            const messages = ["Reading category database...", "Analyzing responses...", "Formatting scores..."];
             let msgIndex = 0;
             
-            // Loop fade changes across the wait duration
             const msgInterval = setInterval(() => {
                 msgIndex++;
                 if(msgIndex < messages.length) {
@@ -282,37 +403,37 @@
                 }
             }, 900);
 
-            // Execute switch safely after an elapsed psychological analyzing buffer
             setTimeout(() => {
                 clearInterval(msgInterval);
                 loadingCard.style.display = 'none';
                 resultCard.style.display = 'block';
 
-                // Core Data mapping
+                // Data mapping dynamically generated
                 const score = parseInt(localStorage.getItem('quizScore') || '0');
                 const totalQ = parseInt(localStorage.getItem('totalQuestions') || '5');
+                const topicContext = localStorage.getItem('quizTopic') || 'General IQ';
+                
                 const percentage = (totalQ === 0) ? 0 : (score / totalQ) * 100;
 
                 const verdictElement = document.getElementById('result-verdict');
                 let verdictStr = "";
 
-                // Branching contextual score outputs
                 if (percentage >= 80) {
                     verdictStr = "You are Genius 😍";
-                    verdictElement.style.color = "#28a745"; // Success green text
+                    verdictElement.style.color = "#28a745"; 
                 } else if (percentage >= 40) {
                     verdictStr = "You are Average 🙂";
-                    verdictElement.style.color = "#ff9800"; // Mild orange indicator
+                    verdictElement.style.color = "#ff9800";
                 } else {
                     verdictStr = "Try Again 😅";
-                    verdictElement.style.color = "#dc3545"; // Warning Red indicator
+                    verdictElement.style.color = "#dc3545"; 
                 }
 
-                // Render parameters
+                // Render UI attributes seamlessly
+                document.getElementById('topic-badge').innerText = topicContext;
                 document.getElementById('score-display').innerText = `${score}/${totalQ}`;
                 verdictElement.innerText = verdictStr;
 
-                // Share Button Listener Binding (Formatting URL explicitly backwards to target /index.html naturally)
                 const shareBtn = document.getElementById('share-btn');
                 shareBtn.addEventListener('click', () => {
                     let pageUrl = window.location.href.split('result.html')[0] || window.location.href; 
@@ -321,16 +442,17 @@
                     }
                     const appUrl = pageUrl + 'index.html';
                     
-                    const textContent = `I scored ${score}/${totalQ} in the IQ Quiz! ✅ Result: ${verdictStr}. Try to beat my score here: ${appUrl}`;
+                    const textContent = `I scored ${score}/${totalQ} inside the ${topicContext} Quiz!🏆 Result: ${verdictStr}. Try to beat my score here: ${appUrl}`;
                     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(textContent)}`;
                     window.open(whatsappUrl, '_blank');
                 });
 
-                // Clear tracked data securely after loading is achieved
+                // Clear tracked data securely post execution ensuring next category launches cleanly.
                 localStorage.removeItem('quizScore');
                 localStorage.removeItem('totalQuestions');
+                localStorage.removeItem('quizTopic');
                 
-            }, 2800); // Display strictly loaded loading message for 2.8s
+            }, 2800); 
         });
     </script>
 </body>
